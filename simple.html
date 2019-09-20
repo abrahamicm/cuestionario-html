@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>pregntas</title>
+	<script>
+		// primero creo la interfaz, un h1#titulo input#respuesta y los botones, siguiente anterior
+		// 2 crear el array preguntas y el entero i;
+		// 3 funcion comprueba, si es mayor a pregunta.length i=0, y si i<0 , i=praguntas.length-1
+		// var titulo es el h1
+	</script>
+</head>
+<body>
+	<h1 id="titulo"></h1>
+	<input type="text" id="respuesta" onkeyup="sonIguales();"><br>
+	<button onclick="siguiente()">siguiente</button><button onclick="anterior()">anterior</button>
+<script>
+	var preguntas = ['uno','dos','tres'];
+	var i=0;
+	var limiteArray =preguntas.length-1;
+	var h1Titulo = document.getElementById('titulo');
+	var respuesta = document.getElementById('respuesta');
+
+	actualiza();
+	
+	function comprueba(){
+		if(i > limiteArray){
+			i=0;
+		}
+		else if(i<0){
+			i=limiteArray
+		}
+	}
+	function actualiza() {
+		h1Titulo.innerHTML=preguntas[i];
+	}
+
+	function siguiente() {
+		i++;
+		comprueba();
+		actualiza();
+        console.log(i);
+	}
+function anterior() {
+		i--;
+		comprueba();
+		actualiza();
+		console.log(i);
+	}
+	function sonIguales(){
+		
+		subraya();
+		if(respuesta.value == preguntas[i]){
+			siguiente();	
+			respuesta.value="";
+			//document.bgColor="#fff"
+			h1Titulo.style.color="black"
+		}
+		
+	}
+
+function subraya() {
+	if (respuesta.value.toString()!= "")
+	{
+		if (respuesta.value.toString().substr(0, respuesta.value.length) == h1Titulo.innerText.substr(0,  respuesta.value.length )) 
+		{
+			h1Titulo.style.color="red";
+			// console.log("iguales");
+			// console.log(respuesta.value.toString().substr(0, respuesta.value.length));
+			// console.log(h1Titulo.innerText.substr(0,  respuesta.value.length));
+			
+			document.body.bgColor="white";
+			
+		}
+		else {
+			h1Titulo.style.color="black";
+			// console.log("distintos");
+			//fail.play();
+			document.body.bgColor="LightGray"
+		}
+	}
+	else {
+			document.body.bgColor="white";
+		}
+	
+
+}
+
+
+
+</script>
+</body>
+</html>
