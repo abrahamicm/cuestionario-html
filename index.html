@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Crear dierctorios</title>
+	<script>
+		// primero creo la interfaz, un h1#titulo input#respuesta y los botones, siguiente anterior
+		// 2 crear el array preguntas y el entero i;
+		// 3 funcion comprueba, si es mayor a pregunta.length i=0, y si i<0 , i=praguntas.length-1
+		// var titulo es el h1
+	</script>
+</head>
+<body>
+	 <h3 id="titulo"></h3>
+	<input type="text" id="respuesta" onkeyup="sonIguales()"  onkeypress="myFunction(event)" ><br><br>
+	
+	<button onclick="anterior()">anterior</button>
+	<button onclick="siguiente()">siguiente</button>
+	<button onclick="respuesta.value+='\''"> ' </button>
+	<button onclick="respuesta.value+= comillasdobles "> " </button>
+	<button onclick="respuesta.value+='(' "> ( </button>
+	<button onclick="respuesta.value+=')' "> ) </button>
+	<button onclick="respuesta.value+='{' "> { </button>
+	<button onclick="respuesta.value+='}' "> } </button>
+	<button onclick="respuesta.value+='=' "> = </button>
+	<br>
+	<span id="indicereguntas" > </span><br>
+	
+	<select id="seleccion" onchange="cambiapreguntas()">
+  <option value="crearCarpetas">crearCarpetas</option>
+  <option value="resumenGenerator">resumenGenerator</option>
+  <option value="practicaCarpetas">practicaCarpetas</option>
+  <option value="practicaGenerator">practicaGenerator</option>
+</select>
+  
+
+	
+	
+<script>
+	var botones = document.querySelectorAll("button");
+	botones.forEach(function(item, index){item.addEventListener('click', 
+		function(){
+			respuesta.focus();
+			sonIguales();
+
+		})
+	})
+	var comillasdobles='"';
+	var preguntas = [];
+	var crearCarpetas = [
+	'import os',
+	'obtengo los directorios en una lista',
+	'a=os.listdir(".")',
+	'para x en el rango de a len',
+	'for x in range(len(a)) :',
+	'quitarle el .mp4 final',
+	'a[x]=a[x].replace(".mp4", "")',
+	' ahora crear los directorios con las listas',
+	'for x in a : os.mkdir(x)',
+	'renombrar archivos,',
+	'import os',
+	'for x in os.listdir("."):',
+	'os.rename(x, x.replace("image",""))'
+	
+	];
+	var practicaCarpetas=[
+		"import os",
+		"os.listdir",
+		"os.mkdir()",
+		"os.rename()",
+		"for x in a :",
+		"range(len(a))",
+		".replace('.mp4', '')",
+
+	];
+	var resumenGenerator= [
+
+"git clone ",
+"https://github.com/InfyOmLabs/",
+"adminlte-generator/tree/5.4 myapp",
+"php artisan infyom:scaffold Ponente",
+"nombre string text",
+"pais string text",
+"foto string text",
+"en la vista views ponentes tables img",
+"img style:'width:75px'",
+"src='{{$ponente->foto}}'",
+"php artisan infyom:scaffold Ponencia",
+"nombre string text",
+"tabla campo",
+"ponente_id integer:unigned:foreign,ponentes,id select",
+" pasar el ponente a vista ponencias",
+"views ponencia fields",
+"quitar el ] del select",
+"Form::select('ponente_id',$ponentes,..",
+"pasar el ponente a PonenciaController",
+"use App\\Models\\Ponente;",
+"public function create",
+"$ponentes = Ponente::pluck('nombre','id');",
+"return view ('ponencias.create' , compact('ponentes') );",
+"una Ponencia tiene un Ponente",
+"App\\Models\\Ponencia",
+"public function ponente",
+"return this->hasOne('App\\Models\\Ponente,'id');",
+"un Ponente tiene mucha Ponencias",
+"public function ponencias",
+"return this->hasMany('App\\Models\\Ponencia');",
+"ir a resources views ponencias table ",
+"$ponencia->ponente>nombre"
+];
+	var practicaGenerator=[
+		
+		"php artisan infyom:scaffold Ponencia",
+		"nombre string text",
+		"tabla campo",
+		"ponente_id integer:unigned:foreign,ponentes,id select",
+		"hasOne('App\\Models\\Ponente,'id');",
+		"hasMany('App\\Models\\Ponencia')",
+		"Form::select('ponente_id',$ponentes",
+		" Ponente::pluck('nombre','id');",
+		
+
+	];
+	preguntas = crearCarpetas;
+	var i=0;
+	var limiteArray =preguntas.length-1;
+	var h1Titulo = document.getElementById('titulo');
+	var respuesta = document.getElementById('respuesta');
+	var indicereguntas = document.getElementById('indicereguntas');
+	var seleccion = document.getElementById('seleccion');
+
+	function cl(x){console.log(x);}
+
+
+	 function cambiapreguntas(){
+	 	//console.log("cambie");
+	 	i=0;
+	 	actualiza();
+	 	switch (seleccion.value) {
+	 		case "crearCarpetas" :
+	 		cl("carpeta");
+	 		preguntas = crearCarpetas;
+	 		break;
+	 		case 'resumenGenerator':
+	 		preguntas = resumenGenerator;
+	 		document.title ="resumen Generator"
+	 		actualiza();
+	 		break;
+
+	 		case 'practicaCarpetas':
+	 		preguntas = practicaCarpetas;
+	 		document.title ="practicaCarpetas"
+	 		actualiza();
+	 		break;
+	 		
+//practicaGenerator
+
+	case 'practicaGenerator':
+	 		preguntas = practicaGenerator;
+	 		document.title ="practicaGenerator"
+	 		actualiza();
+	 		break;
+
+
+	 		// case '';
+	 		// break;
+	 		// case '';
+	 		// break;
+	 		// case '';
+	 		// break;
+
+	 	}
+	 }
+
+	actualiza();
+	
+	function comprueba(){
+		if(i > limiteArray){
+			i=0;
+		}
+		else if(i<0){
+			i=limiteArray
+		}
+	}
+	function actualiza() {
+		h1Titulo.innerHTML=preguntas[i];
+		 limiteArray =preguntas.length-1;
+		comprueba();
+		indicereguntas.innerHTML=preguntas.indexOf(preguntas[i])+1 + "-" + (limiteArray+1);
+		//cl(i);
+	}
+
+	function siguiente() {
+		i++;
+		comprueba();
+		actualiza();
+		respuesta.focus();
+        //console.log(i);
+	}
+function anterior() {
+		i--;
+		comprueba();
+		actualiza();
+		respuesta.focus();
+		//console.log(i);
+	}
+	function sonIguales(e){
+	//console.log(e.code);
+		
+		subraya();
+		if(respuesta.value == preguntas[i]){
+			siguiente();	
+			respuesta.value="";
+			//document.bgColor="#fff"
+			h1Titulo.style.color="black"
+		}
+		
+	}
+
+function subraya() {
+	if (respuesta.value.toString()!= "")
+	{
+		if (respuesta.value.toString().substr(0, respuesta.value.length) == h1Titulo.innerText.substr(0,  respuesta.value.length )) 
+		{
+			h1Titulo.style.color="red";
+			// console.log("iguales");
+			// console.log(respuesta.value.toString().substr(0, respuesta.value.length));
+			// console.log(h1Titulo.innerText.substr(0,  respuesta.value.length));
+			
+			document.body.bgColor="white";
+			
+		}
+		else {
+			h1Titulo.style.color="black";
+			// console.log("distintos");
+			//fail.play();
+			document.body.bgColor="LightGray"
+		}
+	}
+	else {
+			document.body.bgColor="white";
+		}
+	
+
+}
+
+function myFunction(event) {
+  var x = event.code;
+  if (event.code=="Enter"){
+	//console.log("son iguales");
+	siguiente();
+  }
+}
+
+respuesta.focus();
+
+
+
+
+
+</script>
+</body>
+</html>
